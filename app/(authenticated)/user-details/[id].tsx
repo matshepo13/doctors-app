@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Text } from '@/components/Themed';
-import { styles } from '@/app/(login)/loginstyle';
+import { styles } from '@/assets/fonts/stylings/mainstyles';
 import { useLocalSearchParams } from 'expo-router';
 import { getUserDetails } from '@/app/(authenticated)/userService';
 

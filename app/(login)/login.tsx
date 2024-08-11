@@ -21,7 +21,7 @@ export default function LoginScreen() {
       setShowSuccessPopup(true);
       setTimeout(() => {
         setShowSuccessPopup(false);
-        router.replace('/(authenticated)/id-entry' as never);
+        router.replace('/(authenticated)/id-entry');
       }, 2000);
     } catch (error) {
       console.error('Login failed:', error);

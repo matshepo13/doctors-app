@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 // Define Colors object
 const Colors = {
   aliceBlue: '#F0F8FF',
-  white: 'hsl(186, 72%, 24%)',
+  white: '#FFFFFF',
   grayWeb: '#808080',
   verdigris: '#40E0D0',
   gainsboro: '#DCDCDC',
@@ -16,10 +16,12 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'hsl(182, 100%, 35%)',
-    borderWidth: 1,
+    backgroundColor: 'white',
+    borderWidth: 2,
     borderColor: 'hsl(186, 72%, 24%)',
     borderRadius: 10,
+    width: '96%',
+    alignSelf: 'center',
   },
   title: {
     fontSize: 32,
@@ -27,95 +29,21 @@ export const styles = StyleSheet.create({
     color: 'hsl(186, 72%, 24%)',
     marginBottom: 40,
   },
-  inputContainer: {
-    width: '80%',
-    marginBottom: 20,
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'hsl(186, 72%, 24%)',
-    borderRadius: 10,
-    padding: 10,
-  },
-  input: {
-    backgroundColor: 'transparent',
-    borderBottomWidth: 1,
-    borderBottomColor: 'hsl(186, 72%, 24%)',
-    paddingVertical: 10,
-    fontSize: 16,
-    color: 'hsl(186, 72%, 24%)',
-  },
-  inputIcon: {
-    position: 'absolute',
-    right: 0,
-    top: 10,
-    color: 'hsl(186, 72%, 24%)',
-  },
+  
   button: {
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: 'hsl(186, 72%, 24%)',
     borderRadius: 25,
     padding: 15,
-    width: '80%',
+    width: '90%',
     alignItems: 'center',
     marginTop: 20,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  rememberContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderWidth: 1,
-    borderColor: 'hsl(186, 72%, 24%)',
-    marginRight: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkboxInner: {
-    width: 12,
-    height: 12,
-    backgroundColor: 'hsl(186, 72%, 24%)',
-  },
-  rememberText: {
-    color: 'white',
-  },
-  forgotButton: {
-    marginTop: 20,
-    borderWidth: 1,
-    borderColor: 'hsl(186, 72%, 24%)',
-    borderRadius: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  forgotText: {
-    color: 'hsl(186, 72%, 24%)',
-  },
-  joinButton: {
-    marginTop: 30,
-    borderWidth: 1,
-    borderColor: 'hsl(186, 72%, 24%)',
-    borderRadius: 25,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-  },
-  joinText: {
-    color: 'hsl(186, 100%, 19%)',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   dashboardContainer: {
     flex: 1,
     backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'hsl(186, 72%, 24%)',
+    borderWidth: 5,
     borderRadius: 10,
   },
   scrollView: {
@@ -135,6 +63,25 @@ export const styles = StyleSheet.create({
   greetingContainer: {
     padding: 16,
     backgroundColor: Colors.white,
+    borderColor: 'hsl(186, 72%, 24%)',
+    borderWidth: 2,
+    borderRadius: 15,
+    width: '96%',
+    alignSelf: 'center',
+    marginTop: 16,
+  },
+  greetingContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  profileImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    marginRight: 16,
+  },
+  greetingTextContainer: {
+    flex: 1,
   },
   greeting: {
     fontSize: 24,
@@ -150,6 +97,11 @@ export const styles = StyleSheet.create({
     marginTop: 24,
     padding: 16,
     backgroundColor: Colors.white,
+    width: '96%',
+    alignSelf: 'center',    
+    borderColor: 'hsl(182, 100%, 35%)',
+    borderWidth: 2,
+    borderRadius: 15,
   },
   sectionTitle: {
     fontSize: 18,
@@ -160,6 +112,7 @@ export const styles = StyleSheet.create({
   conditionsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    
   },
   conditionItem: {
     flexDirection: 'row',
@@ -178,11 +131,19 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    width: '105%',
+    alignSelf: 'center',
+    borderWidth: 2,
+    borderColor: 'transparent', // Make the border invisible
+    borderRadius: 12,
+    padding: 8,
   },
   medicalRecordItem: {
-    width: '48%',
+    width: '48%', // Reduce width to create space between items
     backgroundColor: Colors.white,
     borderRadius: 8,
+    borderColor: 'hsl(182, 100%, 35%)',
+    borderWidth: 1,
     padding: 16,
     marginBottom: 16,
     shadowColor: Colors.black,
@@ -209,7 +170,7 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
   viewButton: {
-    backgroundColor: Colors.verdigris,
+    backgroundColor: 'hsl(186, 72%, 24%)',
     borderRadius: 4,
     padding: 8,
     marginTop: 8,
@@ -226,15 +187,17 @@ export const styles = StyleSheet.create({
   },
   navbar: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between', // Changed from space-around to space-between
     alignItems: 'center',
     backgroundColor: Colors.white,
     paddingVertical: 8,
+    paddingHorizontal: 16, // Added horizontal padding
     borderTopWidth: 1,
     borderTopColor: Colors.gainsboro,
   },
   navItem: {
     alignItems: 'center',
+    padding: 16, // Added padding to create space around each item
   },
 });
 
