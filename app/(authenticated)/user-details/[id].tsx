@@ -64,12 +64,20 @@ export default function UserDetailsScreen() {
 
   return (
     <View style={styles.container}>
-      <AppBar title="Dashboard" />
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.greetingContainer}>
-          <Text style={styles.greeting}>Good Morning, {userDetails.firstName || 'User'}!</Text>
-          <Text style={styles.subGreeting}>You have 2 upcoming appointments and 1 new health alert.</Text>
+    <AppBar title="Dashboard" />
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.greetingContainer}>
+        <View style={styles.greetingContent}>
+          <Image
+            source={require('@/assets/images/gran.png')}
+            style={styles.profileImage}
+          />
+          <View style={styles.greetingTextContainer}>
+            <Text style={styles.greeting}>Good Morning, {userDetails.firstName || 'User'}!</Text>
+            <Text style={styles.subGreeting}>You have 2 upcoming appointments and 1 new health alert.</Text>
+          </View>
         </View>
+      </View>
 
         <View style={styles.sectionContainer}>
           <Text style={styles.sectionTitle}>Medical History</Text>
