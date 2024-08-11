@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Text } from '@/components/Themed';
+import { styles } from '@/app/(login)/loginstyle';
 import { useLocalSearchParams } from 'expo-router';
 import { getUserDetails } from '@/app/(authenticated)/userService';
+
+import AppBar from '@/components/Appbar';
+import Navbar from '@/components/Navbar';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function UserDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -27,7 +32,11 @@ export default function UserDetailsScreen() {
   if (loading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <AppBar title="Dashboard" />
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+        <Navbar />
       </View>
     );
   }
@@ -35,37 +44,74 @@ export default function UserDetailsScreen() {
   if (!userDetails) {
     return (
       <View style={styles.container}>
+        <AppBar title="Dashboard" />
         <Text>User not found</Text>
+        <Navbar />
       </View>
     );
   }
 
+  const MedicalRecordItem = ({ title, imagePath, date }: { title: string; imagePath: any; date: string }) => (
+    <View style={styles.medicalRecordItem}>
+      <Image source={imagePath} style={styles.medicalRecordImage} />
+      <Text style={styles.medicalRecordTitle}>{title}</Text>
+      <Text style={styles.medicalRecordDate}>Uploaded on {date}</Text>
+      <TouchableOpacity style={styles.viewButton}>
+        <Text style={styles.viewButtonText}>View Images</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>User Details</Text>
-      <Text>ID: {userDetails.idNumber}</Text>
-      <Text>Name: {userDetails.name}</Text>
-      <Text>Email: {userDetails.email}</Text>
-      <Text>Phone Number: {userDetails.phoneNumber}</Text>
-      <Text>Date of Birth: {userDetails.dateOfBirth}</Text>
-      <Text>Address: {userDetails.homeAddress}</Text>
-      <Text>Medical Conditions: {userDetails.medicalConditions}</Text>
+      <AppBar title="Dashboard" />
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.greetingContainer}>
+          <Text style={styles.greeting}>Good Morning, {userDetails.firstName || 'User'}!</Text>
+          <Text style={styles.subGreeting}>You have 2 upcoming appointments and 1 new health alert.</Text>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Medical History</Text>
+          <View style={styles.conditionsContainer}>
+            {userDetails.medicalHistory ? (
+              <View style={styles.conditionItem}>
+                <Ionicons name="heart-outline" size={24} color="#FF5733" />
+                <Text style={styles.conditionText}>{userDetails.medicalHistory}</Text>
+              </View>
+            ) : (
+              <Text>No medical history available</Text>
+            )}
+          </View>
+        </View>
+
+        <View style={styles.sectionContainer}>
+          <Text style={styles.sectionTitle}>Medical Records</Text>
+          <View style={styles.medicalRecordsContainer}>
+            <MedicalRecordItem 
+              title="X-ray" 
+              imagePath={require('@/assets/images/xraymachine.png')} 
+              date="2023-10-01"
+            />
+            <MedicalRecordItem 
+              title="MRI" 
+              imagePath={require('@/assets/images/mrimachine.png')} 
+              date="2023-09-25"
+            />
+            <MedicalRecordItem 
+              title="Blood Tests" 
+              imagePath={require('@/assets/images/BLOODTEST.png')} 
+              date="2023-09-15"
+            />
+            <MedicalRecordItem 
+              title="Ultrasound" 
+              imagePath={require('@/assets/images/ultra.png')} 
+              date="2023-09-20"
+            />
+          </View>
+        </View>
+      </ScrollView>
+      <Navbar />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: 'black'
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-});
-

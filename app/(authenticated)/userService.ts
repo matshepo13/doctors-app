@@ -14,7 +14,9 @@ export async function checkIdInFirestore(idNumber: string): Promise<boolean> {
     const querySnapshot = await getDocs(q);
     
     if (!querySnapshot.empty) {
-      return querySnapshot.docs[0].data();
+      const userData = querySnapshot.docs[0].data();
+      console.log('Fetched user data:', userData); // Add this line for debugging
+      return userData;
     }
     return null;
   }
