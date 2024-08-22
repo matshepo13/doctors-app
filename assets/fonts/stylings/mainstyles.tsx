@@ -24,10 +24,11 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: 'hsl(186, 72%, 24%)',
-    marginBottom: 40,
+    color: 'hsl(186, 100%, 19%)',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   
   button: {
@@ -39,6 +40,11 @@ export const styles = StyleSheet.create({
     width: '90%',
     alignItems: 'center',
     marginTop: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'center',
   },
   dashboardContainer: {
     flex: 1,
@@ -198,6 +204,15 @@ export const styles = StyleSheet.create({
   navItem: {
     alignItems: 'center',
     padding: 16, // Added padding to create space around each item
+  },
+
+  calendar: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    height: 400, // Increased height
+    width: '100%',
+    borderRadius: 10,
+    padding: 10,
   },
 });
 
