@@ -83,6 +83,7 @@ const AppointmentsPage = () => {
       </View>
       {showSuccessPopup && <SuccessPopup message="Appointment details pulled successfully!" />}
       {showErrorPopup && <SuccessPopup message="No appointment details found." />}
+      <Navbar />
     </View>
   );
 };

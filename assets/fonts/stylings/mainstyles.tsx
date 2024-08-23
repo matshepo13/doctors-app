@@ -31,8 +31,8 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    height: 350, // Decreased height
-    width: '100%', // Increased width
+    height: 350, 
+    width: '100%', 
     borderRadius: 10,
     padding: 10,
   },
@@ -40,37 +40,62 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   selectedDate: {
-    fontSize: 16, // Decreased size
+    fontSize: 16,
     color: 'hsl(186, 100%, 19%)',
     textAlign: 'center',
     marginBottom: 10,
+    marginTop:5,
   },
   appointmentDetailsContainer: {
     borderWidth: 1,
-    borderColor: 'hsl(186, 100%, 19%)',
+    borderColor: Colors.white,
+    backgroundColor: Colors.white,
     borderRadius: 10,
     padding: 10,
-    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    backgroundColor: 'white',
     marginTop: 10,
   },
   navbar: {
     flexDirection: 'row',
-    justifyContent: 'space-between', // Changed from space-around to space-between
     alignItems: 'center',
-    backgroundColor: Colors.white,
     paddingVertical: 8,
-    paddingHorizontal: 16, // Added horizontal padding
+    paddingHorizontal: 16, 
     borderTopWidth: 1,
     borderTopColor: Colors.gainsboro,
+    position: 'absolute', 
+    bottom: 0, 
+    width: '170%',
+    marginLeft: 5, 
+    backgroundColor: 'transparent', 
   },
   navItem: {
     alignItems: 'center',
-    padding: 16, // Added padding to create space around each item
+    padding: 16, 
+    marginRight: 20, 
+    color: Colors.midnightGreen, 
   },
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    borderWidth: 2,
+    borderColor: 'hsl(186, 72%, 24%)',
+    borderRadius: 10,
+    width: '96%',
+    alignSelf: 'center',
+  },
+  mainTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'hsl(186, 100%, 19%)',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  
   button: {
     backgroundColor: 'transparent',
     borderWidth: 1,
