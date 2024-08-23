@@ -7,6 +7,7 @@ import { styles } from '@/assets/fonts/stylings/mainstyles';
 import { firestore } from '@/services/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup';
+import Navbar from '@/components/Navbar';
 
 interface AppointmentDetails {
   appointmentDateTime: string;
@@ -69,10 +70,10 @@ const AppointmentsPage = () => {
         }}
         style={styles.calendar}
       />
-      <View style={{ marginTop: 20 }}>
-        <Text style={styles.title}>Selected Date: {selectedDate}</Text>
+      <View style={styles.selectedDateContainer}>
+        <Text style={styles.selectedDate}>Selected Date: {selectedDate}</Text>
         {appointmentDetails && (
-          <View>
+          <View style={styles.appointmentDetailsContainer}>
             <Text style={{ color: 'black' }}>Time: {appointmentDetails.appointmentDateTime}</Text>
             <Text style={{ color: 'black' }}>Doctor: {appointmentDetails.doctorName}</Text>
             <Text style={{ color: 'black' }}>Department: {appointmentDetails.department}</Text>

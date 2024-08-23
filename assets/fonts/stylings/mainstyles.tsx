@@ -14,23 +14,63 @@ const Colors = {
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    borderWidth: 2,
-    borderColor: 'hsl(186, 72%, 24%)',
-    borderRadius: 10,
-    width: '96%',
-    alignSelf: 'center',
+    justifyContent: 'flex-start', // Move the container up
+    paddingTop: 20, // Add some padding at the top
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: 'hsl(186, 100%, 19%)',
-    marginBottom: 20,
     textAlign: 'center',
+    marginBottom: 20,
   },
-  
+  calendar: {
+    borderWidth: 0,
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    height: 350, // Decreased height
+    width: '100%', // Increased width
+    borderRadius: 10,
+    padding: 10,
+  },
+  selectedDateContainer: {
+    marginTop: 10,
+  },
+  selectedDate: {
+    fontSize: 16, // Decreased size
+    color: 'hsl(186, 100%, 19%)',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  appointmentDetailsContainer: {
+    borderWidth: 1,
+    borderColor: 'hsl(186, 100%, 19%)',
+    borderRadius: 10,
+    padding: 10,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    backgroundColor: 'white',
+    marginTop: 10,
+  },
+  navbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between', // Changed from space-around to space-between
+    alignItems: 'center',
+    backgroundColor: Colors.white,
+    paddingVertical: 8,
+    paddingHorizontal: 16, // Added horizontal padding
+    borderTopWidth: 1,
+    borderTopColor: Colors.gainsboro,
+  },
+  navItem: {
+    alignItems: 'center',
+    padding: 16, // Added padding to create space around each item
+  },
   button: {
     backgroundColor: 'transparent',
     borderWidth: 1,
@@ -191,29 +231,4 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  navbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-between', // Changed from space-around to space-between
-    alignItems: 'center',
-    backgroundColor: Colors.white,
-    paddingVertical: 8,
-    paddingHorizontal: 16, // Added horizontal padding
-    borderTopWidth: 1,
-    borderTopColor: Colors.gainsboro,
-  },
-  navItem: {
-    alignItems: 'center',
-    padding: 16, // Added padding to create space around each item
-  },
-
-  calendar: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    height: 400, // Increased height
-    width: '100%',
-    borderRadius: 10,
-    padding: 10,
-  },
 });
-
-// Main screen
