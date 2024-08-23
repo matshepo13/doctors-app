@@ -5,7 +5,8 @@
     "paths": {
       "@/*": ["./*"],
       "@/services/*": ["./services/*"]
-    }
+    },
+    "typeRoots": ["./node_modules/@types", "./react-native-qrcode-svg.d.ts"]
   },
   "include": [
     "**/*.ts",
