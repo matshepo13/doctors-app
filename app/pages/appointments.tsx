@@ -18,7 +18,7 @@ interface AppointmentDetails {
 
 const AppointmentsPage = () => {
   const [selectedDate, setSelectedDate] = useState('');
-  const [appointmentDetails, setAppointmentDetails] = useState<AppointmentDetails | null>(null);
+  const [appointmentDetails, setAppointmentDetails] = useState<AppointmentDetails[]>([]); // Initialize as an empty array
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const router = useRouter();
@@ -35,12 +35,14 @@ const AppointmentsPage = () => {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        const appointmentData = querySnapshot.docs[0].data() as AppointmentDetails;
-        setAppointmentDetails(appointmentData);
+        const appointmentsData = querySnapshot.docs
+          .map(doc => doc.data() as AppointmentDetails)
+          .sort((a, b) => new Date(a.appointmentDateTime).getTime() - new Date(b.appointmentDateTime).getTime());
+        setAppointmentDetails(appointmentsData);
         setShowSuccessPopup(true);
         setTimeout(() => setShowSuccessPopup(false), 2000);
       } else {
-        setAppointmentDetails(null);
+        setAppointmentDetails([]);
         setShowErrorPopup(true);
         setTimeout(() => setShowErrorPopup(false), 2000);
       }
@@ -53,6 +55,7 @@ const AppointmentsPage = () => {
 
   return (
     <View style={styles.container}>
+      <Navbar />
       <Text style={styles.title}>Appointments</Text>
       <Calendar
         current={new Date().toISOString().split('T')[0]}
@@ -72,18 +75,21 @@ const AppointmentsPage = () => {
       />
       <View style={styles.selectedDateContainer}>
         <Text style={styles.selectedDate}>Selected Date: {selectedDate}</Text>
-        {appointmentDetails && (
-          <View style={styles.appointmentDetailsContainer}>
-            <Text style={{ color: 'black' }}>Time: {appointmentDetails.appointmentDateTime}</Text>
-            <Text style={{ color: 'black' }}>Doctor: {appointmentDetails.doctorName}</Text>
-            <Text style={{ color: 'black' }}>Department: {appointmentDetails.department}</Text>
-            <Text style={{ color: 'black' }}>Reason: {appointmentDetails.reason}</Text>
-          </View>
+        {appointmentDetails.length > 0 ? (
+          appointmentDetails.map((appointment, index) => (
+            <View key={index} style={styles.appointmentDetailsContainer}>
+              <Text style={{ color: 'black' }}>Time: {appointment.appointmentDateTime}</Text>
+              <Text style={{ color: 'black' }}>Doctor: {appointment.doctorName}</Text>
+              <Text style={{ color: 'black' }}>Department: {appointment.department}</Text>
+              <Text style={{ color: 'black' }}>Reason: {appointment.reason}</Text>
+            </View>
+          ))
+        ) : (
+          <Text>No appointments found for the selected date.</Text>
         )}
       </View>
       {showSuccessPopup && <SuccessPopup message="Appointment details pulled successfully!" />}
       {showErrorPopup && <SuccessPopup message="No appointment details found." />}
-      <Navbar />
     </View>
   );
 };

@@ -31,13 +31,13 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    height: 350, 
+    height: 320, // Decreased height of the calendar
     width: '100%', 
     borderRadius: 10,
     padding: 10,
   },
   selectedDateContainer: {
-    marginTop: 10,
+    marginTop: 5, // Moved up a bit
   },
   selectedDate: {
     fontSize: 16,
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    marginTop: 10,
+    marginTop: 5, // Moved up a bit
   },
   navbar: {
     flexDirection: 'row',
