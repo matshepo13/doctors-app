@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { Text } from '@/components/Themed';
+import { View, ScrollView, Image, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
 import { styles } from '@/assets/fonts/stylings/mainstyles';
 import { useLocalSearchParams } from 'expo-router';
 import { getUserDetails } from '@/app/(authenticated)/userService';
@@ -25,6 +24,7 @@ export default function UserDetailsScreen() {
     async function fetchUserDetails() {
       try {
         const details = await getUserDetails(id as string);
+        console.log('Fetched user details:', details); // Add this line for debugging
         setUserDetails(details);
       } catch (error) {
         console.error('Error fetching user details:', error);
@@ -65,16 +65,10 @@ export default function UserDetailsScreen() {
     }
 };
 
-
-
-
-
-  
-
   if (loading) {
     return (
       <View style={styles.container}>
-        <AppBar title="Dashboard" />
+        <AppBar title="User Details" />
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
@@ -86,7 +80,7 @@ export default function UserDetailsScreen() {
   if (!userDetails) {
     return (
       <View style={styles.container}>
-        <AppBar title="Dashboard" />
+        <AppBar title="User Details" />
         <Text>User not found</Text>
         <Navbar />
       </View>

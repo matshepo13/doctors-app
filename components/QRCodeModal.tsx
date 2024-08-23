@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Modal, View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import QRCode from 'react-native-qrcode-svg';
 import { useLocalSearchParams } from 'expo-router';
@@ -18,10 +18,12 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ visible, onClose }) => {
     async function fetchDetails() {
       const details = await getUserDetails(id as string);
       setUserDetails(details);
-      console.log('User Details:', details);
+      console.log('Firestore User Details:', details);
     }
     fetchDetails();
   }, [id]);
+
+  const qrCodeValue = userDetails ? `http://192.168.1.100:19006/(authenticated)/user-details/${id}` : '';
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
@@ -34,10 +36,15 @@ const QRCodeModal: React.FC<QRCodeModalProps> = ({ visible, onClose }) => {
             </TouchableOpacity>
           </View>
           {userDetails && (
-            <QRCode
-              value={JSON.stringify(userDetails)}
-              size={200}
-            />
+            <View style={styles.qrCodeContainer}>
+              <QRCode
+                value={qrCodeValue}
+                size={200}
+                logo={require('@/assets/images/splash.png')} // Add your logo here
+                logoSize={50}
+                logoBackgroundColor="transparent"
+              />
+            </View>
           )}
         </View>
       </View>
@@ -67,6 +74,10 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  qrCodeContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
