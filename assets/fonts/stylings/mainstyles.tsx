@@ -61,7 +61,6 @@ export const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 8,
     paddingHorizontal: 16, 
     borderTopWidth: 1,
     borderTopColor: Colors.gainsboro,
@@ -134,13 +133,18 @@ export const styles = StyleSheet.create({
   greetingContainer: {
     padding: 16,
     backgroundColor: Colors.white,
-    borderColor: 'hsl(186, 72%, 24%)',
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
     borderWidth: 2,
+    borderColor: Colors.white, // Changed border color to white
     borderRadius: 15,
     width: '96%',
     alignSelf: 'center',
     marginTop: 16,
   },
+
   greetingContent: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -170,10 +174,17 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     width: '96%',
     alignSelf: 'center',    
-    borderColor: 'hsl(182, 100%, 35%)',
+    borderColor: Colors.white, 
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
     borderWidth: 2,
     borderRadius: 15,
   },
+
+  
+
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -241,14 +252,16 @@ export const styles = StyleSheet.create({
     marginTop: 4,
   },
   viewButton: {
-    backgroundColor: 'hsl(186, 72%, 24%)',
+    backgroundColor: 'transparent',
     borderRadius: 4,
     padding: 8,
     marginTop: 8,
     alignItems: 'center',
+    borderColor: 'hsl(182, 100%, 35%)',
+    borderWidth: 1,
   },
   viewButtonText: {
-    color: Colors.white,
+    color: 'hsl(182, 100%, 35%)',
     fontWeight: 'bold',
   },
   loadingContainer: {

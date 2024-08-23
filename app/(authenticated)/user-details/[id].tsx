@@ -7,7 +7,7 @@ import { getUserDetails } from '@/app/(authenticated)/userService';
 
 import MedicalRecordsModal from '@/components/MedicalRecordsModal';
 import { firestore } from '@/services/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 import AppBar from '@/components/Appbar';
 import Navbar from '@/components/Navbar';
@@ -36,22 +36,39 @@ export default function UserDetailsScreen() {
     fetchUserDetails();
   }, [id]);
 
-  const fetchRecords = async (type: string) => {
+  const fetchXRayRecords = async (userId: string) => {
     try {
-      const recordsRef = collection(firestore, 'PatientList', id as string, `${type}Documents`);
-      console.log('Fetching records from:', `PatientList/${id}/${type}Documents`); // Log the collection path
-      const querySnapshot = await getDocs(recordsRef);
-      const records = querySnapshot.docs.map(doc => doc.data());
-      console.log('Fetched records:', records); // Log the fetched records
-      setModalRecords(records);
+        // Reference to the specific document for the logged-in user
+        const userDocRef = doc(firestore, 'PatientList', userId);
+        const userDocSnapshot = await getDoc(userDocRef);
+
+        if (userDocSnapshot.exists()) {
+            const userData = userDocSnapshot.data();
+            console.log('Fetched user data:', userData);
+            console.log('Available keys in userData:', Object.keys(userData));
+
+            // Access the x-raysDocuments field if it exists
+            let xRayRecords = userData["x-raysDocuments"];
+            if (xRayRecords && Array.isArray(xRayRecords)) {
+                console.log('Fetched X-ray records:', xRayRecords);
+                setModalRecords(xRayRecords); // Display the X-ray records
+            } else {
+                console.log('No X-ray records found.');
+                setModalRecords([]); // No records found
+            }
+        } else {
+            console.log('No matching document found for user ID:', userId);
+            setModalRecords([]); // Clear records if no document is found
+        }
     } catch (error) {
-      if (error instanceof Error) {
-        console.error('Error fetching records:', error.message, error.stack); // Enhanced error logging
-      } else {
-        console.error('Unexpected error', error);
-      }
+        console.error('Error fetching X-ray records:', error);
     }
-  };
+};
+
+
+
+
+
   
 
   if (loading) {
@@ -80,23 +97,22 @@ export default function UserDetailsScreen() {
     <View style={styles.medicalRecordItem}>
       <Image source={imagePath} style={styles.medicalRecordImage} />
       <Text style={styles.medicalRecordTitle}>{title}</Text>
-      <Text style={styles.medicalRecordDate}>Uploaded on {date}</Text>
+      
       <TouchableOpacity
         style={styles.viewButton}
         onPress={() => {
           setModalTitle(`${title}'s Records`);
-          fetchRecords(type);
+          fetchXRayRecords(id as string); // Pass the correct user ID here
           setModalVisible(true);
         }}
       >
-        <Text style={styles.viewButtonText}>View Images</Text>
+        <Text style={styles.viewButtonText}>View Folder</Text>
       </TouchableOpacity>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <AppBar title="Dashboard" />
       <ScrollView style={styles.scrollView}>
         <View style={styles.greetingContainer}>
           <View style={styles.greetingContent}>
@@ -105,14 +121,14 @@ export default function UserDetailsScreen() {
               style={styles.profileImage}
             />
             <View style={styles.greetingTextContainer}>
-              <Text style={styles.greeting}>Good Morning, {userDetails.firstName || 'User'}!</Text>
+            <Text style={{...styles.greeting, fontSize: 14}}>Good Morning, {userDetails.firstName || 'User'}!</Text>
               <Text style={styles.subGreeting}>You have 2 upcoming appointments and 1 new health alert.</Text>
             </View>
           </View>
         </View>
 
         <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Medical History</Text>
+          <Text style={{...styles.sectionTitle, fontSize: 15}}>Medical History</Text>
           <View style={styles.conditionsContainer}>
             {userDetails.medicalHistory ? (
               <View style={styles.conditionItem}>
