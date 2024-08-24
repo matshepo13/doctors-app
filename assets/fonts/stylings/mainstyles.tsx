@@ -149,19 +149,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  professionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  professionIcon: {
-    marginRight: 5,
-  },
-  professionText: {
-    fontSize: 16,
-    color: '#333',
-  },
-
   profileImage: {
     width: 80, // Increase the width
     height: 80, // Increase the height
@@ -311,5 +298,47 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     paddingHorizontal: 8,
     backgroundColor: '#fff',
+  },
+
+  appointmentCard: {
+    width: 200,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    padding: 10,
+    marginRight: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  appointmentDate: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  appointmentReason: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  appointmentDepartment: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  appointmentPatient: {
+    fontSize: 14,
+  },
+
+  professionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  professionIcon: {
+    marginRight: 5,
+  },
+  professionText: {
+    fontSize: 16,
+    color: '#333',
   },
 });

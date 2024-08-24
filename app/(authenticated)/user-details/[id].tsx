@@ -19,13 +19,14 @@ export default function UserDetailsScreen() {
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalRecords, setModalRecords] = useState<any[]>([]); // Update the type to any[]
+  const [modalRecords, setModalRecords] = useState<any[]>([]);
+  const [appointments, setAppointments] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchUserDetails() {
       try {
         const details = await getUserDetails(id as string);
-        console.log('Fetched user details:', details); // Add this line for debugging
+        console.log('Fetched user details:', details);
         setUserDetails(details);
       } catch (error) {
         console.error('Error fetching user details:', error);
@@ -37,34 +38,65 @@ export default function UserDetailsScreen() {
     fetchUserDetails();
   }, [id]);
 
+  useEffect(() => {
+    async function fetchAllAppointments() {
+      try {
+        const patientListRef = collection(firestore, 'PatientList');
+        const patientSnapshot = await getDocs(patientListRef);
+        const allAppointments: any[] = [];
+
+        for (const patientDoc of patientSnapshot.docs) {
+          const patientId = patientDoc.data().idNumber;
+          const collectionName = `Appointments_${patientId}`;
+          console.log('Fetching appointments from collection:', collectionName);
+
+          const appointmentsRef = collection(firestore, collectionName);
+          const querySnapshot = await getDocs(appointmentsRef);
+
+          if (!querySnapshot.empty) {
+            const appointmentsData = querySnapshot.docs.map(doc => doc.data());
+            console.log(`Fetched appointments for patient ${patientId}:`, appointmentsData);
+            allAppointments.push(...appointmentsData);
+          } else {
+            console.log(`No appointments found for patient ${patientId}.`);
+          }
+        }
+
+        setAppointments(allAppointments);
+      } catch (error) {
+        console.error('Error fetching all appointments:', error);
+      }
+    }
+
+    fetchAllAppointments();
+  }, []);
+
   const fetchXRayRecords = async (userId: string) => {
     try {
-        // Reference to the specific document for the logged-in user
-        const userDocRef = doc(firestore, 'PatientList', userId);
-        const userDocSnapshot = await getDoc(userDocRef);
+      const userDocRef = doc(firestore, 'PatientList', userId);
+      const userDocSnapshot = await getDoc(userDocRef);
 
-        if (userDocSnapshot.exists()) {
-            const userData = userDocSnapshot.data();
-            console.log('Fetched user data:', userData);
-            console.log('Available keys in userData:', Object.keys(userData));
+      if (userDocSnapshot.exists()) {
+        const userData = userDocSnapshot.data();
+        console.log('Fetched user data:', userData);
+        console.log('Available keys in userData:', Object.keys(userData));
 
-            // Access the x-raysDocuments field if it exists
-            let xRayRecords = userData["x-raysDocuments"];
-            if (xRayRecords && Array.isArray(xRayRecords)) {
-                console.log('Fetched X-ray records:', xRayRecords);
-                setModalRecords(xRayRecords); // Display the X-ray records
-            } else {
-                console.log('No X-ray records found.');
-                setModalRecords([]); // No records found
-            }
+        let xRayRecords = userData["x-raysDocuments"];
+        if (xRayRecords && Array.isArray(xRayRecords)) {
+          console.log('Fetched X-ray records:', xRayRecords);
+          setModalRecords(xRayRecords);
         } else {
-            console.log('No matching document found for user ID:', userId);
-            setModalRecords([]); // Clear records if no document is found
+          console.log('No X-ray records found.');
+          setModalRecords([]);
         }
+      } else {
+        console.log('No matching document found for user ID:', userId);
+        setModalRecords([]);
+      }
     } catch (error) {
-        console.error('Error fetching X-ray records:', error);
+      console.error('Error fetching X-ray records:', error);
     }
-};
+  };
 
   if (loading) {
     return (
@@ -97,7 +129,7 @@ export default function UserDetailsScreen() {
         style={styles.viewButton}
         onPress={() => {
           setModalTitle(`${title}'s Records`);
-          fetchXRayRecords(id as string); // Pass the correct user ID here
+          fetchXRayRecords(id as string);
           setModalVisible(true);
         }}
       >
@@ -117,7 +149,7 @@ export default function UserDetailsScreen() {
             />
             <View style={styles.greetingTextContainer}>
               <Text style={{...styles.greeting, fontSize: 14}}>Good Morning, Dr. {userDetails.surname || 'User'}!</Text>
-              <Text style={styles.subGreeting}>You have 5 hospital visits this week.</Text>
+              <Text style={styles.subGreeting}>You have 2 upcoming appointments and 1 new health alert.</Text>
               <View style={styles.professionContainer}>
                 <FontAwesome name="stethoscope" size={24} color="#FF5733" style={styles.professionIcon} />
                 <Text style={styles.professionText}>{userDetails.profession || 'No profession available'}</Text>
@@ -140,7 +172,26 @@ export default function UserDetailsScreen() {
             placeholderTextColor="#999"
           />
         </View>
-        
+
+        {/* New My Appointment Schedule Section */}
+        <View style={styles.findPatientContainer}>
+          <View style={styles.findPatientHeader}>
+            <Text style={styles.findPatientTitle}>My Appointment Schedule</Text>
+            <TouchableOpacity>
+              <Text style={styles.findPatientSeeAll}>See All</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView horizontal>
+            {appointments.map((appointment, index) => (
+              <View key={index} style={styles.appointmentCard}>
+                <Text style={styles.appointmentDate}>{new Date(appointment.appointmentDateTime).toLocaleDateString()}</Text>
+                <Text style={styles.appointmentReason}>{appointment.reason}</Text>
+                <Text style={styles.appointmentDepartment}>{appointment.department}</Text>
+                <Text style={styles.appointmentPatient}>{appointment.patientName}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        </View>
       </ScrollView>
       <Navbar />
       <MedicalRecordsModal
