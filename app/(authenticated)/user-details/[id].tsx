@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Image, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
+import { View, ScrollView, Image, ActivityIndicator, TouchableOpacity, Text, TextInput } from 'react-native';
 import { styles } from '@/assets/fonts/stylings/mainstyles';
 import { useLocalSearchParams } from 'expo-router';
 import { getUserDetails } from '@/app/(authenticated)/userService';
@@ -126,8 +126,21 @@ export default function UserDetailsScreen() {
           </View>
         </View>
 
+        {/* New Find a Patient Section */}
+        <View style={styles.findPatientContainer}>
+          <View style={styles.findPatientHeader}>
+            <Text style={styles.findPatientTitle}>Find a patient</Text>
+            <TouchableOpacity>
+              <Text style={styles.findPatientSeeAll}>See All</Text>
+            </TouchableOpacity>
+          </View>
+          <TextInput
+            style={styles.searchInput}
+            placeholder="Search patient"
+            placeholderTextColor="#999"
+          />
+        </View>
         
-       
       </ScrollView>
       <Navbar />
       <MedicalRecordsModal

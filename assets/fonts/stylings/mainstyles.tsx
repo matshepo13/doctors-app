@@ -132,24 +132,36 @@ export const styles = StyleSheet.create({
   },
   greetingContainer: {
     padding: 16,
-    backgroundColor: '#F5F5F5', // Grayish background color
+    backgroundColor: Colors.white,
     shadowColor: 'rgba(0, 0, 0, 0.2)',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
     borderWidth: 2,
-    borderColor: Colors.white,
+    borderColor: Colors.white, // Changed border color to white
     borderRadius: 15,
-    width: '100%', // Increase the width
+    width: '96%',
     alignSelf: 'center',
     marginTop: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
   },
+
   greetingContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
+  professionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  professionIcon: {
+    marginRight: 5,
+  },
+  professionText: {
+    fontSize: 16,
+    color: '#333',
+  },
+
   profileImage: {
     width: 80, // Increase the width
     height: 80, // Increase the height
@@ -168,21 +180,6 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.grayWeb,
     marginTop: 4,
-  },
-  professionContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: Colors.aliceBlue,
-    borderRadius: 8,
-    padding: 8,
-    marginTop: 8,
-  },
-  professionIcon: {
-    marginRight: 8,
-  },
-  professionText: {
-    color: Colors.midnightGreen,
-    fontWeight: 'bold',
   },
   sectionContainer: {
     marginTop: 24,
@@ -284,5 +281,35 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  findPatientContainer: {
+    padding: 16,
+    backgroundColor: '#f8f8f8',
+    borderRadius: 8,
+    marginVertical: 16,
+    color: 'black',
+  },
+  findPatientHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    color: 'hsl(186, 72%, 24%)',
+  },
+  findPatientTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  findPatientSeeAll: {
+    fontSize: 14,
+    color: 'hsl(186, 72%, 24%)',
+  },
+  searchInput: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    backgroundColor: '#fff',
   },
 });
