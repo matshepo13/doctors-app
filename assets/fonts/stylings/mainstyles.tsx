@@ -132,27 +132,28 @@ export const styles = StyleSheet.create({
   },
   greetingContainer: {
     padding: 16,
-    backgroundColor: Colors.white,
+    backgroundColor: '#F5F5F5', // Grayish background color
     shadowColor: 'rgba(0, 0, 0, 0.2)',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 10,
     borderWidth: 2,
-    borderColor: Colors.white, // Changed border color to white
+    borderColor: Colors.white,
     borderRadius: 15,
-    width: '96%',
+    width: '100%', // Increase the width
     alignSelf: 'center',
     marginTop: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-
   greetingContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   profileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
+    width: 80, // Increase the width
+    height: 80, // Increase the height
+    borderRadius: 40, // Adjust the border radius accordingly
     marginRight: 16,
   },
   greetingTextContainer: {
@@ -167,6 +168,21 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: Colors.grayWeb,
     marginTop: 4,
+  },
+  professionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.aliceBlue,
+    borderRadius: 8,
+    padding: 8,
+    marginTop: 8,
+  },
+  professionIcon: {
+    marginRight: 8,
+  },
+  professionText: {
+    color: Colors.midnightGreen,
+    fontWeight: 'bold',
   },
   sectionContainer: {
     marginTop: 24,

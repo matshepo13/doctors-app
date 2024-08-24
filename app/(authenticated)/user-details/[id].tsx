@@ -112,59 +112,22 @@ export default function UserDetailsScreen() {
         <View style={styles.greetingContainer}>
           <View style={styles.greetingContent}>
             <Image
-              source={require('@/assets/images/gran.png')}
+              source={require('@/assets/images/drtumi.png')}
               style={styles.profileImage}
             />
             <View style={styles.greetingTextContainer}>
-            <Text style={{...styles.greeting, fontSize: 14}}>Good Morning, Dr. {userDetails.surname || 'User'}!</Text>
-              <Text style={styles.subGreeting}>You have 2 upcoming appointments and 1 new health alert.</Text>
+              <Text style={{...styles.greeting, fontSize: 14}}>Good Morning, Dr. {userDetails.surname || 'User'}!</Text>
+              <Text style={styles.subGreeting}>You have 5 hospital visits this week.</Text>
+              <View style={styles.professionContainer}>
+                <FontAwesome name="stethoscope" size={24} color="#FF5733" style={styles.professionIcon} />
+                <Text style={styles.professionText}>{userDetails.profession || 'No profession available'}</Text>
+              </View>
             </View>
           </View>
         </View>
 
-        <View style={styles.sectionContainer}>
-          <Text style={{...styles.sectionTitle, fontSize: 15}}>Profession</Text>
-          <View style={styles.conditionsContainer}>
-            {userDetails.profession ? (
-              <View style={styles.conditionItem}>
-                <FontAwesome name="stethoscope" size={24} color="#FF5733" />
-                <Text style={styles.conditionText}>{userDetails.profession}</Text>
-              </View>
-            ) : (
-              <Text>No profession available</Text>
-            )}
-          </View>
-        </View>
-
-        <View style={styles.sectionContainer}>
-          <Text style={styles.sectionTitle}>Medical Records</Text>
-          <View style={styles.medicalRecordsContainer}>
-            <MedicalRecordItem
-              title="X-ray"
-              imagePath={require('@/assets/images/xraymachine.png')}
-              date="2023-10-01"
-              type="xray"
-            />
-            <MedicalRecordItem
-              title="MRI"
-              imagePath={require('@/assets/images/mrimachine.png')}
-              date="2023-09-25"
-              type="mri"
-            />
-            <MedicalRecordItem
-              title="Blood Tests"
-              imagePath={require('@/assets/images/BLOODTEST.png')}
-              date="2023-09-15"
-              type="blood"
-            />
-            <MedicalRecordItem
-              title="Ultrasound"
-              imagePath={require('@/assets/images/ultra.png')}
-              date="2023-09-20"
-              type="ultrasound"
-            />
-          </View>
-        </View>
+        
+       
       </ScrollView>
       <Navbar />
       <MedicalRecordsModal
