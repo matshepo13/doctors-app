@@ -41,6 +41,11 @@ export default function UserDetailsScreen() {
   useEffect(() => {
     async function fetchAllAppointments() {
       try {
+        if (!userDetails) {
+          console.log('User details not available yet.');
+          return;
+        }
+
         const patientListRef = collection(firestore, 'PatientList');
         const patientSnapshot = await getDocs(patientListRef);
         const allAppointments: any[] = [];
@@ -54,7 +59,9 @@ export default function UserDetailsScreen() {
           const querySnapshot = await getDocs(appointmentsRef);
 
           if (!querySnapshot.empty) {
-            const appointmentsData = querySnapshot.docs.map(doc => doc.data());
+            const appointmentsData = querySnapshot.docs
+              .map(doc => doc.data())
+              .filter(appointment => appointment.department.slice(0, 3).toLowerCase() === userDetails.profession.slice(0, 3).toLowerCase()); // Filter by first 3 letters of profession
             console.log(`Fetched appointments for patient ${patientId}:`, appointmentsData);
             allAppointments.push(...appointmentsData);
           } else {
@@ -69,7 +76,7 @@ export default function UserDetailsScreen() {
     }
 
     fetchAllAppointments();
-  }, []);
+  }, [userDetails]);
 
   const fetchXRayRecords = async (userId: string) => {
     try {
