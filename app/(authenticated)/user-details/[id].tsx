@@ -12,6 +12,7 @@ import AppBar from '@/components/Appbar';
 import Navbar from '@/components/Navbar';
 import { Ionicons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import SearchPatient from '@/components/SearchPatient';
 
 export default function UserDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -160,7 +161,7 @@ export default function UserDetailsScreen() {
             />
             <View style={styles.greetingTextContainer}>
               <Text style={{...styles.greeting, fontSize: 14}}>Good Morning, Dr. {userDetails.surname || 'User'}!</Text>
-              <Text style={styles.subGreeting}>You have 2 upcoming appointments and 1 new health alert.</Text>
+              <Text style={styles.subGreeting}>You have 5 hospital visits this week</Text>
               <View style={styles.professionContainer}>
                 <FontAwesome name="stethoscope" size={24} color="#FF5733" style={styles.professionIcon} />
                 <Text style={styles.professionText}>{userDetails.profession || 'No profession available'}</Text>
@@ -177,11 +178,7 @@ export default function UserDetailsScreen() {
               <Text style={styles.findPatientSeeAll}>See All</Text>
             </TouchableOpacity>
           </View>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search patient"
-            placeholderTextColor="#999"
-          />
+          <SearchPatient />
         </View>
 
         {/* New My Appointment Schedule Section */}

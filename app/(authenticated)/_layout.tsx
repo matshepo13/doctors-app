@@ -12,6 +12,12 @@ export default function AuthenticatedLayout() {
           headerBackTitle: 'Back',
         }} 
       />
+      <Stack.Screen 
+        name="patient-details/[id]" 
+        options={{ 
+          headerShown: false, // Hide the header
+        }} 
+      />
     </Stack>
   );
 }

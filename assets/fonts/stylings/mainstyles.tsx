@@ -98,12 +98,17 @@ export const styles = StyleSheet.create({
   button: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: 'hsl(186, 72%, 24%)',
+    borderColor: 'transparent', // Transparent border color
     borderRadius: 25,
     padding: 15,
     width: '90%',
     alignItems: 'center',
     marginTop: 20,
+    shadowColor: '#000', // Added shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   buttonText: {
     color: 'white',
@@ -291,13 +296,17 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: 'hsl(186, 72%, 24%)',
   },
-  searchInput: {
-    height: 40,
+  searchInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     backgroundColor: '#fff',
+  },
+  cameraIcon: {
+    marginLeft: 8,
   },
 
   appointmentCard: {
@@ -348,5 +357,38 @@ export const styles = StyleSheet.create({
   appointmentMedicalHistory: {
     fontSize: 14,
     marginBottom: 5,
+  },
+  input: {
+    backgroundColor: 'transparent',
+    borderBottomWidth: 1,
+    paddingVertical: 10,
+    borderColor: 'white', // Changed border color to white
+    fontSize: 16,
+    color: 'hsl(186, 72%, 24%)',
+    height: 40, // Decreased height
+    borderRadius: 10, // Added border radius
+    shadowColor: '#000', // Added shadow
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5, // Increased shadow opacity for more shininess
+    shadowRadius: 4,
+    elevation: 5, // Increased elevation for more shininess
+  },
+  vitalGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  vitalItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+    width: '48%', // Adjust width to fit two items per row
+  },
+  vitalText: {
+    fontSize: 16,
+    color: '#000',
+  },
+  vitalIcon: {
+    marginRight: 8, // Example style, adjust as needed
   },
 });

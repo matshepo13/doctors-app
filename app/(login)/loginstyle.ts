@@ -9,6 +9,7 @@ const Colors = {
   gainsboro: '#DCDCDC',
   black: '#000000',
   midnightGreen: '#004953',
+  mainColor: 'hsl(186, 72%, 24%)',
 };
 
 export const styles = StyleSheet.create({
