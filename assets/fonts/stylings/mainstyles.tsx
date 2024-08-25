@@ -391,4 +391,37 @@ export const styles = StyleSheet.create({
   vitalIcon: {
     marginRight: 8, // Example style, adjust as needed
   },
+  infoCard: {
+    width: 200,
+    height: 175,
+    marginRight: 10,
+    borderBottomLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-end',
+  },
+  cardOverlay: {
+    backgroundColor: 'rgba(240, 248, 255, 0.7)', // aliceblue with transparency
+    padding: 10,
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'hsl(186, 100%, 19%)',
+  },
+  cardDate: {
+    fontSize: 14,
+    color: 'hsl(186, 100%, 19%)',
+    marginBottom: 5,
+  },
+  
 });
