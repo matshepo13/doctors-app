@@ -7,6 +7,7 @@ import { firestore } from '@/services/firebase';
 import { collection, query, where, getDocs, doc as firestoreDoc, getDoc } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup';
 import Navbar from '@/components/Navbar';
+import LabResultsModal from '@/components/LabResultsModal'; // Added import
 
 interface AppointmentDetails {
   appointmentDateTime: string;
@@ -23,6 +24,8 @@ const AppointmentsPage = () => {
   const [appointmentDetails, setAppointmentDetails] = useState<AppointmentDetails[]>([]);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false); // Added state
+  const [selectedPatientId, setSelectedPatientId] = useState(''); // Added state
   const router = useRouter();
 
   const handleDateSelect = async (day: { dateString: string }) => {
@@ -72,6 +75,10 @@ const AppointmentsPage = () => {
     }
   };
 
+  const handleClose = () => { // Added function
+    setModalVisible(false);
+  };
+
   return (
     <View style={styles.container}>
       <Navbar />
@@ -109,6 +116,7 @@ const AppointmentsPage = () => {
       </View>
       {showSuccessPopup && <SuccessPopup message="Appointment details pulled successfully!" />}
       {showErrorPopup && <SuccessPopup message="No appointment details found." />}
+      <LabResultsModal visible={modalVisible} onClose={handleClose} patientId={selectedPatientId} />
     </View>
   );
 };

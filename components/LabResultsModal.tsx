@@ -6,9 +6,10 @@ import { useRouter } from 'expo-router';
 interface LabResultsModalProps {
   visible: boolean;
   onClose: () => void;
+  patientId: string; // Add patientId prop
 }
 
-const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose }) => {
+const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose, patientId }) => {
   const translateY = new Animated.Value(300);
   const router = useRouter();
 
@@ -26,7 +27,7 @@ const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose }) =
     onClose();
     router.push({
       pathname: '/(authenticated)/resultsdisplay', // Use single backslash
-      params: { id: '6307189765234081' }, // Replace with the actual patient ID
+      params: { id: patientId }, // Use the patientId prop
     });
   };
 

@@ -169,7 +169,11 @@ const PatientDetailsScreen = () => {
           </View>
         </ScrollView>
       </View>
-      <LabResultsModal visible={labResultsModalVisible} onClose={() => setLabResultsModalVisible(false)} />
+      <LabResultsModal 
+        visible={labResultsModalVisible} 
+        onClose={() => setLabResultsModalVisible(false)} 
+        patientId={id as string}
+      />
       <Navbar />
     </View>
   );
