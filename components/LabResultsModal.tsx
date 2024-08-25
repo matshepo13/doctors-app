@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, View, TouchableOpacity, Text, StyleSheet, Animated } from 'react-native';
 import { Colors } from '@/assets/fonts/stylings/mainstyles';
+import { useRouter } from 'expo-router';
 
 interface LabResultsModalProps {
   visible: boolean;
@@ -9,6 +10,7 @@ interface LabResultsModalProps {
 
 const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose }) => {
   const translateY = new Animated.Value(300);
+  const router = useRouter();
 
   React.useEffect(() => {
     if (visible) {
@@ -19,6 +21,15 @@ const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose }) =
     }
   }, [visible]);
 
+  const handleViewSection = () => {
+    console.log('MRI Scan button pressed'); // Debugging statement
+    onClose();
+    router.push({
+      pathname: '/(authenticated)/resultsdisplay', // Use single backslash
+      params: { id: '6307189765234081' }, // Replace with the actual patient ID
+    });
+  };
+
   return (
     <Modal visible={visible} transparent={true} animationType="none">
       <View style={styles.modalContainer}>
@@ -26,16 +37,16 @@ const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose }) =
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={onClose}>
+          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
             <Text style={styles.buttonText}>MRI Scan</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={onClose}>
+          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
             <Text style={styles.buttonText}>X-ray</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={onClose}>
+          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
             <Text style={styles.buttonText}>Ultrasound</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={onClose}>
+          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
             <Text style={styles.buttonText}>Blood test</Text>
           </TouchableOpacity>
         </Animated.View>
