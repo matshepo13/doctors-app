@@ -7,6 +7,7 @@ import AppBar from '@/components/Appbar';
 import Navbar from '@/components/Navbar';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import LabResultsModal from '@/components/LabResultsModal';
 
 interface PatientDetails {
   firstName: string;
@@ -24,6 +25,7 @@ const PatientDetailsScreen = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
+  const [labResultsModalVisible, setLabResultsModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchPatientDetails = async () => {
@@ -138,7 +140,7 @@ const PatientDetailsScreen = () => {
               <View style={mainStyles.cardOverlay}>
                 <Text style={mainStyles.cardTitle}>Lab Results</Text>
                 <Text style={mainStyles.cardDate}>12 June 2024</Text>
-                <TouchableOpacity style={mainStyles.viewButton}>
+                <TouchableOpacity style={mainStyles.viewButton} onPress={() => setLabResultsModalVisible(true)}>
                   <Text style={mainStyles.viewButtonText}>View Section</Text>
                 </TouchableOpacity>
               </View>
@@ -167,6 +169,7 @@ const PatientDetailsScreen = () => {
           </View>
         </ScrollView>
       </View>
+      <LabResultsModal visible={labResultsModalVisible} onClose={() => setLabResultsModalVisible(false)} />
       <Navbar />
     </View>
   );

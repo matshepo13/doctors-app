@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 // Define Colors object
-const Colors = {
+export const Colors = {
   aliceBlue: '#F0F8FF',
   white: '#FFFFFF',
   grayWeb: '#808080',
