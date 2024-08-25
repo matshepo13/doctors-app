@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import LabResultsModal from '@/components/LabResultsModal';
+import { useRouter } from 'expo-router';
 
 interface PatientDetails {
   firstName: string;
@@ -26,6 +27,14 @@ const PatientDetailsScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
   const [labResultsModalVisible, setLabResultsModalVisible] = useState(false);
+  const router = useRouter();
+
+  const handleViewConsultations = () => {
+    router.push({
+      pathname: '/(authenticated)/consultations', // Corrected pathname
+      params: { id },
+    });
+  };
 
   useEffect(() => {
     const fetchPatientDetails = async () => {
@@ -129,7 +138,7 @@ const PatientDetailsScreen = () => {
               <View style={mainStyles.cardOverlay}>
                 <Text style={mainStyles.cardTitle}>Consultations</Text>
                 <Text style={mainStyles.cardDate}>20 August 2024</Text>
-                <TouchableOpacity style={mainStyles.viewButton}>
+                <TouchableOpacity style={mainStyles.viewButton} onPress={handleViewConsultations}>
                   <Text style={mainStyles.viewButtonText}>View Section</Text>
                 </TouchableOpacity>
               </View>

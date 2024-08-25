@@ -18,6 +18,13 @@ export default function AuthenticatedLayout() {
           headerShown: false, // Hide the header
         }} 
       />
+      <Stack.Screen 
+        name="consultations/[id]" 
+        options={{ 
+          headerTitle: 'Consultations',
+          headerBackTitle: 'Back',
+        }} 
+      />
     </Stack>
   );
 }
