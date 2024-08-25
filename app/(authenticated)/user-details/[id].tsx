@@ -61,12 +61,16 @@ export default function UserDetailsScreen() {
           if (!querySnapshot.empty) {
             const appointmentsData = querySnapshot.docs
               .map(doc => doc.data())
-              .filter(appointment => appointment.department.slice(0, 3).toLowerCase() === userDetails.profession.slice(0, 3).toLowerCase()); // Filter by first 3 letters of profession
+              .filter(appointment => appointment.department.slice(0, 3).toLowerCase() === userDetails.profession.slice(0, 3).toLowerCase());
             console.log(`Fetched appointments for patient ${patientId}:`, appointmentsData);
             allAppointments.push(...appointmentsData);
           } else {
             console.log(`No appointments found for patient ${patientId}.`);
           }
+
+          // Debugging: Display patient details
+          const patientDetails = patientDoc.data();
+          console.log(`Patient details for ID ${patientId}:`, patientDetails);
         }
 
         setAppointments(allAppointments);

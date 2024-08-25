@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, Alert } from 'react-native';
+import { View, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { useRouter } from 'expo-router';
-import { Href } from 'expo-router';
 import { styles } from '@/assets/fonts/stylings/mainstyles';
 import { firestore } from '@/services/firebase';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, doc as firestoreDoc, getDoc } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup';
 import Navbar from '@/components/Navbar';
 
@@ -14,11 +13,14 @@ interface AppointmentDetails {
   department: string;
   doctorName: string;
   reason: string;
+  patientId: string;
+  patientName?: string;
+  medicalHistory?: string;
 }
 
 const AppointmentsPage = () => {
   const [selectedDate, setSelectedDate] = useState('');
-  const [appointmentDetails, setAppointmentDetails] = useState<AppointmentDetails[]>([]); // Initialize as an empty array
+  const [appointmentDetails, setAppointmentDetails] = useState<AppointmentDetails[]>([]);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const router = useRouter();
@@ -26,7 +28,7 @@ const AppointmentsPage = () => {
   const handleDateSelect = async (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
     try {
-      const appointmentsRef = collection(firestore, 'Appointments_6307189765234081');
+      const appointmentsRef = collection(firestore, 'Appointments_9510197649241');
       const q = query(
         appointmentsRef,
         where('appointmentDateTime', '>=', `${day.dateString}T00:00`),
@@ -35,13 +37,30 @@ const AppointmentsPage = () => {
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
-        const appointmentsData = querySnapshot.docs
-          .map(doc => doc.data() as AppointmentDetails)
-          .sort((a, b) => new Date(a.appointmentDateTime).getTime() - new Date(b.appointmentDateTime).getTime());
+        const appointmentsData = await Promise.all(
+          querySnapshot.docs.map(async (docSnapshot) => { // Renamed the parameter to docSnapshot
+            const appointment = docSnapshot.data() as AppointmentDetails;
+            const patientId = docSnapshot.ref.parent.id.split('_')[1];
+            const patientRef = firestoreDoc(firestore, 'PatientList', patientId); // Renamed doc to firestoreDoc
+            const patientDoc = await getDoc(patientRef);
+            if (patientDoc.exists()) {
+              const patientData = patientDoc.data() as { firstName: string; medicalHistory: string };
+              return {
+                ...appointment,
+                patientFirstName: patientData.firstName,
+                patientMedicalHistory: patientData.medicalHistory,
+              };
+            }
+            console.log('No patient found for id:', appointment.patientId);
+            return appointment;
+          })
+        );
+        console.log('Appointments data with patient info:', appointmentsData);
         setAppointmentDetails(appointmentsData);
         setShowSuccessPopup(true);
         setTimeout(() => setShowSuccessPopup(false), 2000);
       } else {
+        console.log('No appointments found for the selected date.');
         setAppointmentDetails([]);
         setShowErrorPopup(true);
         setTimeout(() => setShowErrorPopup(false), 2000);

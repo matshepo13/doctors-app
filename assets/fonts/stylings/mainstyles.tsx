@@ -341,4 +341,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  appointmentFirstName: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
+  appointmentMedicalHistory: {
+    fontSize: 14,
+    marginBottom: 5,
+  },
 });
