@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { styles as mainStyles } from '@/assets/fonts/stylings/mainstyles';
+import AddConsultationModal from '@/components/AddConsultationModal'; // Import the modal component
+
+// Define the type for a consultation
+type Consultation = {
+  id: number;
+  doctorName: string;
+  date: string;
+  specialty: string;
+  type: string;
+};
 
 const ConsultationsPage = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
+  const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
 
-  const consultations = [
+  const consultations: Consultation[] = [
     {
       id: 1,
       doctorName: 'Dr. John Smith',
@@ -31,9 +42,15 @@ const ConsultationsPage = () => {
     },
   ];
 
+  const handleAddConsultation = (consultation: Consultation) => {
+    // Handle the new consultation submission
+    console.log('New Consultation:', consultation);
+    setModalVisible(false);
+  };
+
   return (
     <View style={mainStyles.container}>
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
         <Text style={styles.addButtonText}>Add Consultation</Text>
       </TouchableOpacity>
       <ScrollView>
@@ -51,6 +68,11 @@ const ConsultationsPage = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <AddConsultationModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={handleAddConsultation}
+      />
     </View>
   );
 };
