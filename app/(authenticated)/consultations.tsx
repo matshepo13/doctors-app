@@ -3,12 +3,15 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'rea
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { styles as mainStyles } from '@/assets/fonts/stylings/mainstyles';
 import AddConsultationModal from '@/components/AddConsultationModal'; // Import the modal component
+import { firestore } from '@/services/firebase';
+import { collection, addDoc, doc } from 'firebase/firestore';
+import SuccessPopup from '@/components/SuccessPopup'; // Import the SuccessPopup component
 
 // Define the type for a consultation
 type Consultation = {
   id: number;
   doctorName: string;
-  date: string;
+  date: string | Date;
   specialty: string;
   type: string;
 };
@@ -17,8 +20,8 @@ const ConsultationsPage = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams();
   const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
-
-  const consultations: Consultation[] = [
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // State to manage success popup visibility
+  const [consultations, setConsultations] = useState<Consultation[]>([
     {
       id: 1,
       doctorName: 'Dr. John Smith',
@@ -40,12 +43,31 @@ const ConsultationsPage = () => {
       specialty: 'Physical Therapist',
       type: 'Ultrasound',
     },
-  ];
+  ]);
 
-  const handleAddConsultation = (consultation: Consultation) => {
-    // Handle the new consultation submission
-    console.log('New Consultation:', consultation);
-    setModalVisible(false);
+  const handleAddConsultation = async (consultation: Consultation) => {
+    try {
+      // Ensure the date is a Date object before converting to string
+      const consultationWithStringDate = {
+        ...consultation,
+        date: (typeof consultation.date === 'string' ? new Date(consultation.date) : consultation.date).toISOString().split('T')[0], // Format date to exclude time
+      };
+
+      const patientDocRef = doc(firestore, 'PatientList', id as string);
+      const consultationsRef = collection(patientDocRef, `Cons_${id}`);
+      await addDoc(consultationsRef, consultationWithStringDate);
+
+      // Update the state to reflect the new consultation
+      setConsultations((prevConsultations) => [consultationWithStringDate, ...prevConsultations]);
+
+      // Show success popup
+      setShowSuccessPopup(true);
+      setTimeout(() => setShowSuccessPopup(false), 2000);
+
+      setModalVisible(false);
+    } catch (error) {
+      console.error('Error adding consultation:', error);
+    }
   };
 
   return (
@@ -56,10 +78,10 @@ const ConsultationsPage = () => {
       <ScrollView>
         {consultations.map((consultation) => (
           <TouchableOpacity key={consultation.id} style={styles.consultationCard}>
-            <Image source={require('@/assets/images/dr1.png')} style={styles.doctorImage} />
+            <Image source={require('@/assets/images/drtumi.png')} style={styles.doctorImage} />
             <View style={styles.consultationDetails}>
               <Text style={styles.doctorName}>{consultation.doctorName}</Text>
-              <Text style={styles.consultationDate}>{consultation.date}</Text>
+              <Text style={styles.consultationDate}>{typeof consultation.date === 'string' ? consultation.date : consultation.date.toDateString()}</Text>
               <Text style={styles.consultationSpecialty}>{consultation.specialty}</Text>
             </View>
             <TouchableOpacity style={styles.consultationTypeButton}>
@@ -73,6 +95,7 @@ const ConsultationsPage = () => {
         onClose={() => setModalVisible(false)}
         onSubmit={handleAddConsultation}
       />
+      {showSuccessPopup && <SuccessPopup message="Consultation added successfully!" />}
     </View>
   );
 };

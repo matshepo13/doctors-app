@@ -44,7 +44,13 @@ const AddConsultationModal: React.FC<AddConsultationModalProps> = ({ visible, on
   };
 
   const handleSubmit = () => {
-    const newConsultation = { title, date, time, notes, additionalNotes };
+    const newConsultation = {
+      id: Date.now(), // Generate a unique ID
+      doctorName: 'Dr. Williams', // Replace with the logged-in doctor's name
+      date: date || new Date(), // Ensure date is a Date object
+      specialty: 'User Profession', // Replace with the logged-in user's profession
+      type: title,
+    };
     onSubmit(newConsultation);
     onClose();
   };
@@ -59,79 +65,76 @@ const AddConsultationModal: React.FC<AddConsultationModalProps> = ({ visible, on
               <Ionicons name="close" size={24} color="black" />
             </TouchableOpacity>
           </View>
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>Consultation Title</Text>
-              <TextInput
-                style={[styles.input, { color: 'black' }]}
-                placeholder="Consultation Title"
-                value={title}
-                onChangeText={setTitle}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>Date</Text>
-              <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="yyyy/mm/dd"
-                  value={date ? date.toISOString().split('T')[0] : 'yyyy/mm/dd'}
-                  editable={false}
-                  pointerEvents="none"
-                />
-              </TouchableOpacity>
-              {showDatePicker && (
-                <DateTimePicker
-                  value={date || new Date()}
-                  mode="date"
-                  display="default"
-                  onChange={handleDateChange}
-                />
-              )}
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>Time</Text>
-              <TouchableOpacity onPress={() => setShowTimePicker(true)}>
-                <TextInput
-                  style={styles.input}
-                  placeholder="hh:mm"
-                  value={time ? time.toTimeString().split(' ')[0] : 'hh:mm'}
-                  editable={false}
-                  pointerEvents="none"
-                />
-              </TouchableOpacity>
-              {showTimePicker && (
-                <DateTimePicker
-                  value={time || new Date()}
-                  mode="time"
-                  display="default"
-                  onChange={handleTimeChange}
-                />
-              )}
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>Consultation Notes</Text>
-              <TextInput
-                style={[styles.input, styles.notesInput]}
-                placeholder="Consultation Notes"
-                value={notes}
-                onChangeText={setNotes}
-                multiline={true}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.inputTitle}>Additional Notes</Text>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Consultation Title</Text>
+            <TextInput
+              style={[styles.input, { color: 'black' }]}
+              placeholder="Consultation Title"
+              value={title}
+              onChangeText={setTitle}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Date</Text>
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
               <TextInput
                 style={styles.input}
-                placeholder="Additional Notes"
-                value={additionalNotes}
-                onChangeText={setAdditionalNotes}
+                placeholder="yyyy/mm/dd"
+                value={date ? date.toISOString().split('T')[0] : 'yyyy/mm/dd'}
+                editable={false}
+                pointerEvents="none"
               />
-            </View>
-            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-              <Text style={styles.submitButtonText}>Submit</Text>
             </TouchableOpacity>
-          </ScrollView>
+            {showDatePicker && (
+              <DateTimePicker
+                value={date || new Date()}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Time</Text>
+            <TouchableOpacity onPress={() => setShowTimePicker(true)}>
+              <TextInput
+                style={styles.input}
+                placeholder="hh:mm"
+                value={time ? time.toTimeString().split(' ')[0] : 'hh:mm'}
+                editable={false}
+                pointerEvents="none"
+              />
+            </TouchableOpacity>
+            {showTimePicker && (
+              <DateTimePicker
+                value={time || new Date()}
+                mode="time"
+                display="default"
+                onChange={handleTimeChange}
+              />
+            )}
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Consultation Notes</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Consultation Notes"
+              value={notes}
+              onChangeText={setNotes}
+            />
+          </View>
+          <View style={styles.inputContainer}>
+            <Text style={styles.inputTitle}>Additional Notes</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Additional Notes"
+              value={additionalNotes}
+              onChangeText={setAdditionalNotes}
+            />
+          </View>
+          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+            <Text style={styles.submitButtonText}>Submit</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -150,7 +153,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 20,
-    maxHeight: '80%', // Ensure the modal content doesn't exceed 80% of the screen height
   },
   modalHeader: {
     flexDirection: 'row',
@@ -163,9 +165,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'hsl(182, 100%, 35%)',
   },
-  scrollViewContent: {
-    paddingBottom: 20, // Add some padding to the bottom of the scroll view
-  },
   inputContainer: {
     marginBottom: 10,
   },
@@ -177,9 +176,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#f0f0f0',
     borderRadius: 5,
     padding: 10,
-  },
-  notesInput: {
-    height: 100, // Increase the height for the notes input
   },
   submitButton: {
     backgroundColor: 'hsl(182, 100%, 35%)',
