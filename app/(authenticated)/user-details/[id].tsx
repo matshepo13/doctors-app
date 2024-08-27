@@ -192,10 +192,26 @@ export default function UserDetailsScreen() {
           <ScrollView horizontal>
             {appointments.map((appointment, index) => (
               <View key={index} style={styles.appointmentCard}>
-                <Text style={styles.appointmentDate}>{new Date(appointment.appointmentDateTime).toLocaleDateString()}</Text>
+                <View style={styles.appointmentDetailRow}>
+                  <Ionicons name="calendar" size={18} color="hsl(182, 100%, 35%)" />
+                  <Text style={{ marginLeft: 5 }}>Date & Time</Text>
+                </View>
+                <Text style={{...styles.appointmentDate, fontWeight: 'normal', fontSize: 14}}>{new Date(appointment.appointmentDateTime).toLocaleDateString()}</Text>
+                <Text style={{...styles.appointmentDate, fontWeight: 'normal', fontSize: 14}}>{new Date(appointment.appointmentDateTime).toLocaleTimeString()}</Text>
+                <View style={styles.appointmentDetailRow}>
+                  <FontAwesome name="medkit" size={18} color="hsl(182, 100%, 35%)" />
+                  <Text style={{ marginLeft: 5 }}>Reason</Text>
+                </View>
                 <Text style={styles.appointmentReason}>{appointment.reason}</Text>
+                <View style={styles.appointmentDetailRow}>
+                  <FontAwesome name="user-md" size={18} color="hsl(182, 100%, 35%)" />
+                  <Text style={{ marginLeft: 5 }}>Department</Text>
+                </View>
                 <Text style={styles.appointmentDepartment}>{appointment.department}</Text>
                 <Text style={styles.appointmentPatient}>{appointment.patientName}</Text>
+                <TouchableOpacity style={styles.viewAppointmentButton}>
+                  <Text style={styles.viewAppointmentButtonText}>View Appointment</Text>
+                </TouchableOpacity>
               </View>
             ))}
           </ScrollView>

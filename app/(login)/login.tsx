@@ -4,7 +4,7 @@ import { Text } from '@/components/Themed';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './loginstyle';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/services/firebase';
+// import { auth } from '@/services/firebase';
 import { useRouter } from 'expo-router';
 import SuccessPopup from '@/components/SuccessPopup';
 
@@ -25,7 +25,7 @@ export default function LoginScreen() {
       }, 2000);
     } catch (error) {
       console.error('Login failed:', error);
-      // Handle login error (show error message to user)
+      
     }
   };
 

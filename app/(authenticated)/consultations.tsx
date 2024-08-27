@@ -6,12 +6,13 @@ import AddConsultationModal from '@/components/AddConsultationModal'; // Import 
 import { firestore } from '@/services/firebase';
 import { collection, addDoc, doc } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup'; // Import the SuccessPopup component
+import RoutineCheckPopup from '@/components/RoutineCheckPopup'; // Import the new popup component
 
 // Define the type for a consultation
 type Consultation = {
   id: number;
   doctorName: string;
-  date: string | Date;
+  date: string;
   specialty: string;
   type: string;
 };
@@ -21,6 +22,7 @@ const ConsultationsPage = () => {
   const { id } = useLocalSearchParams();
   const [modalVisible, setModalVisible] = useState(false); // State to manage modal visibility
   const [showSuccessPopup, setShowSuccessPopup] = useState(false); // State to manage success popup visibility
+  const [showRoutineCheckPopup, setShowRoutineCheckPopup] = useState(false); // State to manage routine check popup visibility
   const [consultations, setConsultations] = useState<Consultation[]>([
     {
       id: 1,
@@ -51,6 +53,8 @@ const ConsultationsPage = () => {
       const consultationWithStringDate = {
         ...consultation,
         date: (typeof consultation.date === 'string' ? new Date(consultation.date) : consultation.date).toISOString().split('T')[0], // Format date to exclude time
+        specialty: 'Rheumatologist', // Hardcoded profession
+        type: 'Check Up', // Hardcoded type
       };
 
       const patientDocRef = doc(firestore, 'PatientList', id as string);
@@ -77,11 +81,19 @@ const ConsultationsPage = () => {
       </TouchableOpacity>
       <ScrollView>
         {consultations.map((consultation) => (
-          <TouchableOpacity key={consultation.id} style={styles.consultationCard}>
-            <Image source={require('@/assets/images/drtumi.png')} style={styles.doctorImage} />
+          <TouchableOpacity
+            key={consultation.id}
+            style={styles.consultationCard}
+            onPress={() => {
+              if (consultation.type === 'Routine check') {
+                setShowRoutineCheckPopup(true);
+              }
+            }}
+          >
+            <Image source={require('@/assets/images/doc.png')} style={styles.doctorImage} />
             <View style={styles.consultationDetails}>
               <Text style={styles.doctorName}>{consultation.doctorName}</Text>
-              <Text style={styles.consultationDate}>{typeof consultation.date === 'string' ? consultation.date : consultation.date.toDateString()}</Text>
+              <Text style={styles.consultationDate}>{typeof consultation.date === 'string' ? consultation.date : new Date(consultation.date).toDateString()}</Text>
               <Text style={styles.consultationSpecialty}>{consultation.specialty}</Text>
             </View>
             <TouchableOpacity style={styles.consultationTypeButton}>
@@ -96,6 +108,10 @@ const ConsultationsPage = () => {
         onSubmit={handleAddConsultation}
       />
       {showSuccessPopup && <SuccessPopup message="Consultation added successfully!" />}
+      <RoutineCheckPopup
+        visible={showRoutineCheckPopup}
+        onClose={() => setShowRoutineCheckPopup(false)}
+      />
     </View>
   );
 };

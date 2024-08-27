@@ -9,6 +9,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import LabResultsModal from '@/components/LabResultsModal';
 import { useRouter } from 'expo-router';
+import PrescriptionsModal from '@/components/PrescriptionsModal';
 
 interface PatientDetails {
   firstName: string;
@@ -27,6 +28,7 @@ const PatientDetailsScreen = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchText, setSearchText] = useState('');
   const [labResultsModalVisible, setLabResultsModalVisible] = useState(false);
+  const [prescriptionsModalVisible, setPrescriptionsModalVisible] = useState(false);
   const router = useRouter();
 
   const handleViewConsultations = () => {
@@ -87,10 +89,10 @@ const PatientDetailsScreen = () => {
   return (
     <View style={mainStyles.container}>
       <View style={{...mainStyles.sectionContainer, marginTop: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 3 }}>
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'hsl(182, 100%, 35%)', padding: 10, borderRadius: 10 }}>
-          <MaterialCommunityIcons name="magnify" size={24} color="white" style={{ marginRight: 8 }} />
+        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'white',borderColor: 'hsl(182, 100%, 35%)', borderWidth: 1, padding: 10, borderRadius: 10 }}>
+          <MaterialCommunityIcons name="magnify" size={24} color="gray" style={{ marginRight: 8 }} />
           <TextInput
-            style={{ flex: 1, color: 'white', fontSize: 16 }}
+            style={{ flex: 1, color: 'gray', fontSize: 16 }}
             placeholder="Search regarding patient"
             value={searchText}
             onChangeText={(text) => setSearchText(text)}
@@ -160,7 +162,7 @@ const PatientDetailsScreen = () => {
               <View style={mainStyles.cardOverlay}>
                 <Text style={mainStyles.cardTitle}>Prescriptions</Text>
                 <Text style={mainStyles.cardDate}>20 August 2024</Text>
-                <TouchableOpacity style={mainStyles.viewButton}>
+                <TouchableOpacity style={mainStyles.viewButton} onPress={() => setPrescriptionsModalVisible(true)}>
                   <Text style={mainStyles.viewButtonText}>View Section</Text>
                 </TouchableOpacity>
               </View>
@@ -181,6 +183,11 @@ const PatientDetailsScreen = () => {
       <LabResultsModal 
         visible={labResultsModalVisible} 
         onClose={() => setLabResultsModalVisible(false)} 
+        patientId={id as string}
+      />
+      <PrescriptionsModal
+        visible={prescriptionsModalVisible}
+        onClose={() => setPrescriptionsModalVisible(false)}
         patientId={id as string}
       />
       <Navbar />

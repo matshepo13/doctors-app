@@ -4,7 +4,7 @@ import { Text } from '@/components/Themed';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './loginstyle';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth, firestore } from '@/services/firebase';
+// import { auth, firestore } from '@/services/firebase';
 import { useRouter } from 'expo-router';
 import { collection, addDoc } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup';

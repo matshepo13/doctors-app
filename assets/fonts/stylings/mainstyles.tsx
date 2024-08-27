@@ -289,9 +289,10 @@ export const styles = StyleSheet.create({
     color: 'hsl(186, 72%, 24%)',
   },
   findPatientTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
+  fontSize: 18,
+  fontWeight: 'bold',
+  color: 'black', // Change the color to black
+},
   findPatientSeeAll: {
     fontSize: 14,
     color: 'hsl(186, 72%, 24%)',
@@ -311,6 +312,7 @@ export const styles = StyleSheet.create({
 
   appointmentCard: {
     width: 200,
+    height: 250,
     backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
@@ -336,6 +338,23 @@ export const styles = StyleSheet.create({
   },
   appointmentPatient: {
     fontSize: 14,
+  },
+
+  appointmentDetailRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  viewAppointmentButton: {
+    padding: 10,
+    backgroundColor: 'hsl(182, 100%, 35%)',
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  viewAppointmentButtonText: {
+    color: Colors.white,
+    fontWeight: 'bold',
   },
 
   professionContainer: {

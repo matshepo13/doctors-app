@@ -15,15 +15,9 @@ const Navbar = () => {
       <TouchableOpacity style={styles.navItem} onPress={() => router.push('/(authenticated)/home' as Href<'/(authenticated)/home'>)}>
         <Ionicons name="home-outline" size={24} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => router.push('/pages/appointments' as Href<'/pages/appointments'>)}>
-        <Ionicons name="calendar-outline" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem}>
-        <Ionicons name="document-text-outline" size={24} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.navItem} onPress={() => setQrModalVisible(true)}>
-        <Ionicons name="qr-code-outline" size={24} color="black" />
-      </TouchableOpacity>
+      
+      
+      
       <TouchableOpacity style={styles.navItem}>
         <Ionicons name="person-outline" size={24} color="black" />
       </TouchableOpacity>

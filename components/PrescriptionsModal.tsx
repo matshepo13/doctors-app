@@ -1,15 +1,15 @@
 import React from 'react';
 import { Modal, View, TouchableOpacity, Text, StyleSheet, Animated } from 'react-native';
-import { Colors } from '@/assets/fonts/stylings/mainstyles';
 import { useRouter } from 'expo-router';
+import { Colors } from '@/assets/fonts/stylings/mainstyles';
 
-interface LabResultsModalProps {
+interface PrescriptionsModalProps {
   visible: boolean;
   onClose: () => void;
   patientId: string;
 }
 
-const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose, patientId }) => {
+const PrescriptionsModal: React.FC<PrescriptionsModalProps> = ({ visible, onClose, patientId }) => {
   const translateY = new Animated.Value(300);
   const router = useRouter();
 
@@ -22,10 +22,10 @@ const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose, pat
     }
   }, [visible]);
 
-  const handleViewSection = () => {
+  const handleAddPrescription = () => {
     onClose();
     router.push({
-      pathname: '/(authenticated)/resultsdisplay',
+      pathname: '/(authenticated)/AddPrescription',
       params: { id: patientId },
     });
   };
@@ -37,17 +37,11 @@ const LabResultsModal: React.FC<LabResultsModalProps> = ({ visible, onClose, pat
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Text style={styles.closeButtonText}>X</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
-            <Text style={styles.buttonText}>Ultrasound </Text>
+          <TouchableOpacity style={styles.button} onPress={handleAddPrescription}>
+            <Text style={styles.buttonText}>Add Prescription</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
-            <Text style={styles.buttonText}>X-ray</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
-            <Text style={styles.buttonText}>MRI Scan</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleViewSection}>
-            <Text style={styles.buttonText}>Blood test</Text>
+          <TouchableOpacity style={styles.button} onPress={onClose}>
+            <Text style={styles.buttonText}>View Prescriptions</Text>
           </TouchableOpacity>
         </Animated.View>
       </View>
@@ -78,9 +72,6 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: 16,
     color: Colors.midnightGreen,
-    position: 'absolute',
-    bottom: 8,
-    left: 10,
   },
   button: {
     width: '90%',
@@ -98,4 +89,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LabResultsModal;
+export default PrescriptionsModal;
