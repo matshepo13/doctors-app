@@ -1,8 +1,8 @@
-import { firestore } from '@/services/firebase';
+import { db } from '@/services/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export async function checkIdInFirestore(idNumber: string, collectionName: string): Promise<boolean> {
-    const usersRef = collection(firestore, collectionName);
+    const usersRef = collection(db, collectionName);
     const q = query(usersRef, where('licenseNumber', '==', idNumber));
     const querySnapshot = await getDocs(q);
     return !querySnapshot.empty;
@@ -10,7 +10,7 @@ export async function checkIdInFirestore(idNumber: string, collectionName: strin
 
 export async function getUserDetails(medicalRecordNumber: string) {
   console.log('Querying DoctorsList for Medical Record Number:', medicalRecordNumber); // Debugging statement
-  const usersRef = collection(firestore, 'DoctorsList');
+  const usersRef = collection(db, 'DoctorsList');
   const q = query(usersRef, where('licenseNumber', '==', medicalRecordNumber));
   const querySnapshot = await getDocs(q);
   

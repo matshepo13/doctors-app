@@ -1,4 +1,4 @@
-import { firestore } from '@/services/firebase';
+import { db as firestore } from '@/services/firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 
 export async function getPatientDetails(idNumber: string) {

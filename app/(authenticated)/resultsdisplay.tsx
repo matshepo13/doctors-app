@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { firestore } from '@/services/firebase';
+import { db } from '@/services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { styles as mainStyles } from '@/assets/fonts/stylings/mainstyles';
 
@@ -23,9 +23,8 @@ const ResultsDisplay = () => {
         console.error('No ID provided');
         return;
       }
-
       try {
-        const docRef = doc(firestore, 'PatientList', id as string);
+        const docRef = doc(db, 'PatientList', id as string);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setUltrasoundDocuments(docSnap.data().ultrasoundsDocuments || []);

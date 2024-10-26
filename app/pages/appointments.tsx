@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { useRouter } from 'expo-router';
 import { styles } from '@/assets/fonts/stylings/mainstyles';
-import { firestore } from '@/services/firebase';
+import { db as firestore } from '@/services/firebase';
 import { collection, query, where, getDocs, doc as firestoreDoc, getDoc } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup';
 import Navbar from '@/components/Navbar';

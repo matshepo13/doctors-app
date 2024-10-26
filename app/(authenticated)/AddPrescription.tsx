@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView 
 import { useRouter } from 'expo-router';
 import { Colors } from '@/assets/fonts/stylings/mainstyles';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { collection, addDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, doc, getFirestore } from 'firebase/firestore';
 // import { firestore } from '@/services/firebase';
 import SuccessPopup from '@/components/SuccessPopup';
 import { useLocalSearchParams } from 'expo-router';
@@ -65,7 +65,8 @@ const AddPrescriptionPage = () => {
         date: date ? date.toISOString().split('T')[0] : null,
       };
 
-      const patientDocRef = doc(firestore, 'PatientList', id as string);
+      const db = getFirestore();
+      const patientDocRef = doc(db, 'PatientList', id as string);
       const prescriptionsRef = collection(patientDocRef, `Prescriptions_${id}`);
       await addDoc(prescriptionsRef, prescriptionData);
 

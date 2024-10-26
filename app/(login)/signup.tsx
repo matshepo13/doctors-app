@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { TextInput, TouchableOpacity, View, Alert, ScrollView } from 'react-native';
-import { Text } from '@/components/Themed';
+import { Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './loginstyle';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-// import { auth, firestore } from '@/services/firebase';
+import { db } from '@/services/firebase';
 import { useRouter } from 'expo-router';
 import { collection, addDoc } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup';
+import { getAuth } from 'firebase/auth';
+import ErrorPopup from '@/components/ErrorPopup';
 
 export default function SignupScreen() {
   const [name, setName] = useState('');
@@ -23,10 +25,11 @@ export default function SignupScreen() {
 
   const handleSignup = async () => {
     try {
+      const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await addDoc(collection(firestore, 'DoctorsList'), {
+      await addDoc(collection(db, 'DoctorsList'), {
         uid: user.uid,
         name,
         surname,
@@ -128,7 +131,7 @@ export default function SignupScreen() {
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
       {showSuccessPopup && <SuccessPopup message="Signup Successful" />}
-      {showErrorPopup && <SuccessPopup message="Signup Failed. Please try again." />}
+      {showErrorPopup && <ErrorPopup message="Signup Failed. Please try again." />}
     </ScrollView>
   );
 }

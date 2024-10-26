@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Alert } from 'react-native';
-import { Text } from '@/components/Themed';
+import { View, TextInput, TouchableOpacity, Alert, Text } from 'react-native';
 import { styles } from '../(login)/loginstyle';
 import { useRouter } from 'expo-router';
 import { checkIdInFirestore } from '@/app/(authenticated)/userService';

@@ -17,9 +17,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'hsl(182, 100%, 35%)',
+    backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: 'hsl(186, 72%, 24%)',
+    borderColor: 'mainColor',
     borderRadius: 10,
   },
   title: {
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonText: {
-    color: 'white',
+    color: 'mainColor',
     fontWeight: 'bold',
     fontSize: 16,
   },

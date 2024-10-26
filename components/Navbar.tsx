@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Href } from 'expo-router';
 import { styles } from '@/assets/fonts/stylings/mainstyles';
-import QRCodeModal from './QRCodeModal'; // Ensure this import is present
+// import QRCodeModal from './QRCodeModal'; // Ensure this import is present
 
 const Navbar = () => {
   const [qrModalVisible, setQrModalVisible] = useState(false);
@@ -21,7 +21,7 @@ const Navbar = () => {
       <TouchableOpacity style={styles.navItem}>
         <Ionicons name="person-outline" size={24} color="black" />
       </TouchableOpacity>
-      <QRCodeModal visible={qrModalVisible} onClose={() => setQrModalVisible(false)} />
+      {/* <QRCodeModal visible={qrModalVisible} onClose={() => setQrModalVisible(false)} /> */}
     </View>
   );
 };

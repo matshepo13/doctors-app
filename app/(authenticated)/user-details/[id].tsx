@@ -5,7 +5,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { getUserDetails } from '@/app/(authenticated)/userService';
 
 import MedicalRecordsModal from '@/components/MedicalRecordsModal';
-import { firestore } from '@/services/firebase';
+import { db } from '@/services/firebase';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 import AppBar from '@/components/Appbar';
@@ -47,7 +47,7 @@ export default function UserDetailsScreen() {
           return;
         }
 
-        const patientListRef = collection(firestore, 'PatientList');
+        const patientListRef = collection(db, 'PatientList');
         const patientSnapshot = await getDocs(patientListRef);
         const allAppointments: any[] = [];
 
@@ -56,7 +56,7 @@ export default function UserDetailsScreen() {
           const collectionName = `Appointments_${patientId}`;
           console.log('Fetching appointments from collection:', collectionName);
 
-          const appointmentsRef = collection(firestore, collectionName);
+          const appointmentsRef = collection(db, collectionName);
           const querySnapshot = await getDocs(appointmentsRef);
 
           if (!querySnapshot.empty) {
@@ -85,7 +85,7 @@ export default function UserDetailsScreen() {
 
   const fetchXRayRecords = async (userId: string) => {
     try {
-      const userDocRef = doc(firestore, 'PatientList', userId);
+      const userDocRef = doc(db, 'PatientList', userId);
       const userDocSnapshot = await getDoc(userDocRef);
 
       if (userDocSnapshot.exists()) {

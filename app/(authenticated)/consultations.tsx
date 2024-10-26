@@ -3,8 +3,8 @@ import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image } from 'rea
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { styles as mainStyles } from '@/assets/fonts/stylings/mainstyles';
 import AddConsultationModal from '@/components/AddConsultationModal'; // Import the modal component
-import { firestore } from '@/services/firebase';
-import { collection, addDoc, doc } from 'firebase/firestore';
+import { db } from '@/services/firebase'; // Changed from 'firestore' to 'db'
+import { collection, addDoc, doc, getFirestore } from 'firebase/firestore';
 import SuccessPopup from '@/components/SuccessPopup'; // Import the SuccessPopup component
 import RoutineCheckPopup from '@/components/RoutineCheckPopup'; // Import the new popup component
 
@@ -57,7 +57,8 @@ const ConsultationsPage = () => {
         type: 'Check Up', // Hardcoded type
       };
 
-      const patientDocRef = doc(firestore, 'PatientList', id as string);
+      const db = getFirestore();
+      const patientDocRef = doc(db, 'PatientList', id as string);
       const consultationsRef = collection(patientDocRef, `Cons_${id}`);
       await addDoc(consultationsRef, consultationWithStringDate);
 

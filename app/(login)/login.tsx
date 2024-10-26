@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { TextInput, TouchableOpacity, View } from 'react-native';
-import { Text } from '@/components/Themed';
+import { View, TextInput, TouchableOpacity, Alert, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from './loginstyle';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 // import { auth } from '@/services/firebase';
 import { useRouter } from 'expo-router';
 import SuccessPopup from '@/components/SuccessPopup';
@@ -17,6 +16,8 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
+      // Assuming 'auth' is imported from '@/services/firebase'
+      const auth = getAuth(); // Import getAuth from 'firebase/auth' if not already imported
       await signInWithEmailAndPassword(auth, email, password);
       setShowSuccessPopup(true);
       setTimeout(() => {
